@@ -1,48 +1,39 @@
-/**
- * My To Do List App
- *
- * @format
- */
+// App.jsx
+import React, { useState } from 'react';
+import { SafeAreaView, StyleSheet, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { useState } from 'react';
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Pressable,
-  View,
-  Text,
-  ScrollView,
-  TextInput,
-  Button
-} from 'react-native';
+import ToDoForm from './src/components/ToDoForm'; // Adjust the import path as needed
+import HomeScreen from './src/screens/HomeScreen';  // Import HomeScreen component
+import AboutScreen from './src/screens/AboutScreen'; // Import AboutScreen component
 
-import ToDoList from './ToDoList';
-import ToDoForm from './ToDoForm';
-
+const Stack = createNativeStackNavigator(); // Create a stack navigator
 
 function App() {
-
+  // State for tasks
   const [tasks, setTasks] = useState([
     'Do laundry',
     'Go to gym',
     'Walk dog'
   ]);
 
+  // Function to add a new task
   const addTask = (taskText) => {
-    if (taskText.trim() === "") return; // We will not add empty tasks with this string
-    if (!tasks.includes(taskText)) {
-      setTasks([...tasks, taskText]);
-    } else {
-      alert("This task already exists.");
-    }
+    setTasks((prevTasks) => [...prevTasks, taskText]);
   };
 
   return (
-    <SafeAreaView>
-      <ToDoList tasks={tasks}/>
-      <ToDoForm addTask={addTask} />
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" options={{ title: 'My To-Do List' }}>
+          {(props) => (
+            <HomeScreen {...props} tasks={tasks} addTask={addTask} />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="About" component={AboutScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

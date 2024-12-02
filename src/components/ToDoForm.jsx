@@ -20,13 +20,8 @@ const ToDoForm = ({ addTask }) => {
         value={taskText}
         onChangeText={setTaskText}
       />
-      <Button title="Add Task" onPress={() => {
-  if (taskText.trim() !== '') {
-    addTask(taskText);
-    setTaskText(''); 
-  }
-}} />
-    </View>
+      <Button title="Add Task" onPress={handleAddTask} />
+      </View>
   );
 };
 
