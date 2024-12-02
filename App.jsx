@@ -29,10 +29,19 @@ function App() {
     'Walk dog'
   ]);
 
+  const addTask = (taskText) => {
+    if (taskText.trim() === "") return; // We will not add empty tasks with this string
+    if (!tasks.includes(taskText)) {
+      setTasks([...tasks, taskText]);
+    } else {
+      alert("This task already exists.");
+    }
+  };
+
   return (
     <SafeAreaView>
       <ToDoList tasks={tasks}/>
-      <ToDoForm />
+      <ToDoForm addTask={addTask} />
     </SafeAreaView>
   );
 }
